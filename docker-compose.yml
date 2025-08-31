@@ -1,0 +1,37 @@
+services:
+  dev:
+    # For keeping the container alive
+    command: tail -F /dev/null
+    stdin_open: true
+    tty: true
+    container_name: "tnn"
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        UBUNTU_VERSION: "22.04"          
+        PYTHON_VERSION: "3.10"           
+        PROJECT_NAME: "tversky_neural_network"
+    volumes:
+      - .:/code
+    # Sync project with local and rebuild when pyproject.toml changes
+    develop:
+      watch:
+        - action: sync
+          path: ./tversky_neural_network
+          target: /code
+          ignore:
+            - .venv/
+        - action: rebuild
+          path: ./pyproject.toml
+    # Using GPU resource if available
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            count: all
+            capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DISABLE_REQUIRE=1

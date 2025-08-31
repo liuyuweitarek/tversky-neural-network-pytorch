@@ -1,0 +1,64 @@
+[project]
+name = "tversky-neural-network"
+version = "0.1.0"
+description = "Implementation of Tversky Neural Networks in Pytorch."
+authors = [
+    { name = "Tarek Liu", email = "liuyuwei.tarek@gmail.com" }
+]
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+keywords = [
+    'artificial intelligence',
+    'deep learning',
+    'tversky similarity',
+    'psychologically plausible',
+    'neural networks',
+]
+
+classifiers=[
+    'Development Status :: 4 - Beta',
+    'Intended Audience :: Developers',
+    'Topic :: Scientific/Engineering :: Artificial Intelligence',
+    'Programming Language :: Python :: 3.10',
+]
+
+dependencies = [
+    "numpy==1.26.4",
+    "torch==2.1.2",
+]
+
+[project.urls]
+Homepage = "https://pypi.org/project/tversky-neural-network-pytorch/"
+Repository = "https://github.com/liuyuweitarek/tversky-neural-network-pytorch"
+
+[tool.uv.build-backend]
+module-root = "."
+module-name = "tversky_neural_network"
+
+[tool.uv.workspace]
+members = [
+    "tversky-neural-network",
+]
+
+[project.optional-dependencies]
+examples = []
+test = [
+    "pytest"
+]
+
+[tool.pytest.ini_options]
+pythonpath = [
+  "."
+]
+
+
+[build-system]
+requires = ["uv_build >= 0.7.19, <0.9.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "twine>=6.1.0",
+]
