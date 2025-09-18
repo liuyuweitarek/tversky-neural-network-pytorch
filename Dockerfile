@@ -26,16 +26,20 @@ RUN apt-get update \
 
 ENV PATH=/root/.local/bin/:$PATH
 
-WORKDIR /code
+WORKDIR /${PROJECT_NAME}
 
 RUN printf '#!/bin/bash\n\
-if [ ! -d $PROJECT_NAME ]; then\n\
-    uv init --package $PROJECT_NAME --python=$PYTHON_VERSION;\n\
+if [ ! -f pyproject.toml ]; then\n\
+    uv init --python=$PYTHON_VERSION;\n\
 fi\n\
 \n\
-cd $PROJECT_NAME;\n\
+if [ ! -d .venv ]; then\n\
+    uv sync --locked --no-install-project;\n\
+fi\n\
 \n\
 exec "$@"\n' > /usr/local/bin/entrypoint.sh \
   && chmod +x /usr/local/bin/entrypoint.sh
 
 ENTRYPOINT [ "/usr/local/bin/entrypoint.sh" ]
+
+# CMD ["uv", "run", "sphinx-autobuild", "-b", "html", "--host=0.0.0.0", "--port=8000", "source", "build"]

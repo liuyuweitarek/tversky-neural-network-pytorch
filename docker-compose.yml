@@ -1,10 +1,10 @@
 services:
   dev:
+    command: uv run sphinx-autobuild -b html --host 0.0.0.0 --port 8000 docs/source docs/build
     # For keeping the container alive
-    command: tail -F /dev/null
     stdin_open: true
     tty: true
-    container_name: "tnn"
+    container_name: "dev"
     build:
       context: .
       dockerfile: Dockerfile
@@ -13,7 +13,9 @@ services:
         PYTHON_VERSION: "3.10"           
         PROJECT_NAME: "tversky_neural_network"
     volumes:
-      - .:/code
+      - .:/tversky_neural_network
+    ports:
+      - "8000:8000"
     # Sync project with local and rebuild when pyproject.toml changes
     develop:
       watch:
