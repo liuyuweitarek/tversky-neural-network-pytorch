@@ -43,7 +43,7 @@ model = TverskyProjectionLayer(
     match_type = "subtract",
 )
 
-x = torch.randn(10, 32, device=device)
+x = torch.randn(10, 32)
 out = model(x)
 
 loss = out.sum()

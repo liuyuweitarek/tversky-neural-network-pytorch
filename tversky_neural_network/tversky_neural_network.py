@@ -39,9 +39,6 @@ def _tversky_prepare(
     feature_norm = F.normalize(feature_bank, dim=-1, eps=eps)
     
     # calculate projection a·f_{k}, b·f_{k} => (N, F), (P, F)
-    print(a_norm.device)
-    print(feature_norm.device)
-    print(feature_norm.T.device)
     a_norm_fk = a_norm @ feature_norm.T
     b_norm_fk = b_norm @ feature_norm.T
 
@@ -165,7 +162,7 @@ class TverskyProjectionLayer(Module):
         softmin_tau: float = 1.0,
         match_type: Literal["ignore", "subtract"] = "subtract",
         device: Union[str, torch.device] = "cpu",
-        dtype: torch.dtype = torch.float16,
+        dtype: torch.dtype = torch.float32,
     ) -> None:
         factory_kwargs = {"device": device, "dtype": dtype}
         super().__init__()

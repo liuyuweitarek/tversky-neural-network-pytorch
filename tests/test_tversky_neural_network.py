@@ -58,17 +58,14 @@ def test_readme():
         psi = "softmin",
         softmin_tau = 0.8,
         match_type = "subtract",
-        device = device,
-        dtype = torch.float32
     )
-    x = torch.randn(10, 32, device=device)
+    x = torch.randn(10, 32)
     out = model(x)
 
     assert out.shape == (10, 16)
     assert torch.isfinite(out).all()
 
     loss = out.sum()
-    print(loss.shape)
     loss.backward()
     for p in model.parameters():
         assert p.grad is not None
