@@ -1,4 +1,9 @@
-from tversky_neural_network.tnn import (
+from tversky_neural_network.tversky_neural_network import (
     TverskyProjectionLayer,
-    TverskySimilarityLayer
+    tversky_similarity
 )
+
+__all__ = [
+    "TverskyProjectionLayer",
+    "tversky_similarity"
+]
