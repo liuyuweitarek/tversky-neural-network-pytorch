@@ -14,15 +14,41 @@ to **differentiable vector** form.
 
 <img width="965" height="264" alt="image" src="https://github.com/user-attachments/assets/a3b9bd17-f89e-4952-8b14-0a63ce4fcb39" />
 
+
+
 ## Install
 
 ```bash
-$ pip install tversky-neural-network
+$ pip install tversky-neural-network-pytorch
 ```
 
 ## Usage
 
-`WIP`
+Tversky Projection Layer
+
+```python
+import torch
+from tversky_neural_network import TverskyProjectionLayer
+
+model = TverskyProjectionLayer(
+    in_features = 32,
+    out_features = 16,
+    num_features = 8,
+    alpha = 0.5,
+    beta = 0.5,
+    theta = 1.0,
+    eps = 1e-8,
+    psi = "softmin",
+    softmin_tau = 0.8,
+    match_type = "subtract",
+)
+
+x = torch.randn(10, 32, device=device)
+out = model(x)
+
+loss = out.sum()
+loss.backward()
+```
 
 ## Develop in Docker
 
@@ -35,7 +61,7 @@ $ pip install tversky-neural-network
 2. Access docker container terminal with:
 
     ```bash
-    $ docker exec -it tnn /bin/bash
+    $ docker exec -it dev /bin/bash
     ```
 
     Exit terminal with `CTRL + D`.
@@ -46,6 +72,14 @@ $ pip install tversky-neural-network
     $ docker compose down
     ```
 
+4. In container terminal, execute scripts with:
+
+    ```bash
+    $ uv run python your_script.py
+    # test
+    $ uv run pytest -v
+    ```
+    
 ## Citations
 
 ```bibtex
